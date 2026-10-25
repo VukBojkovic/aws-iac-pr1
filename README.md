@@ -18,6 +18,7 @@ A modular, enterprise-grade Python application and infrastructure project design
 
 ## Architecture Diagram
 
+```mermaid
 graph TD
     subgraph AWS_Cloud ["AWS Cloud (eu-central-1)"]
         subgraph Custom_VPC ["Custom VPC (10.0.0.0/16)"]
