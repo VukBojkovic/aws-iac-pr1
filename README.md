@@ -16,8 +16,6 @@ A modular, enterprise-grade Python application and infrastructure project design
 
 ---
 
-## Architecture Diagram
-
 ## Architecture Overview
 
 The infrastructure is deployed in the `eu-central-1` region following a secure, multi-tier, multi-AZ VPC architecture:
