@@ -18,26 +18,13 @@ A modular, enterprise-grade Python application and infrastructure project design
 
 ## Architecture Diagram
 
-```mermaid
-graph TD
-    subgraph AWS_Cloud ["AWS Cloud (eu-central-1)"]
-        subgraph Custom_VPC ["Custom VPC (10.0.0.0/16)"]
-            subgraph Public_Subnets ["Public Subnets (Multi-AZ)"]
-                IGW[Internet Gateway]
-                NAT[NAT Gateway]
-            end
-            subgraph Private_App_Subnets ["Private App Subnets"]
-                APP[App Workloads / EC2]
-            end
-            subgraph Private_Data_Subnets ["Private Data Subnets"]
-                DB[(Database Tier)]
-            end
-        end
-    end
+## Architecture Overview
 
-    IGW --> NAT
-    NAT --> APP
-    APP --> DB
+The infrastructure is deployed in the `eu-central-1` region following a secure, multi-tier, multi-AZ VPC architecture:
+
+- **Public Subnets:** Contain the Internet Gateway (`IGW`) and NAT Gateway for secure outbound internet access.
+- **Private App Subnets:** Host the core application workloads and EC2 instances (`APP`).
+- **Private Data Subnets:** Dedicated to database tiers (`DB`), isolated from direct public exposure.
 
 ## Project Roadmap and Infrastructure Overview
 
