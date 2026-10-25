@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aws-audit-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aws-audit
+  template:
+    metadata:
+      labels:
+        app: aws-audit
+    spec:
+      containers:
+      - name: audit
+        image: aws-audit-tool:latest
+        imagePullPolicy: IfNotPresent

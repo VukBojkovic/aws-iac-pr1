@@ -1,0 +1,20 @@
+# Virtual Environment
+venv/
+.venv/
+env/
+
+# Terraform binaries and state
+terraform/.terraform/
+.terraform/
+*.tfstate
+*.tfstate.backup
+.terraform.lock.hcl
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# OS & Editor files
+.DS_Store
+.vscode/
+.idea/
