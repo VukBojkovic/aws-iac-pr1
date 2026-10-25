@@ -26,11 +26,9 @@ graph TD
                 IGW[Internet Gateway]
                 NAT[NAT Gateway]
             end
-
             subgraph Private_App_Subnets ["Private App Subnets"]
                 APP[App Workloads / EC2]
             end
-
             subgraph Private_Data_Subnets ["Private Data Subnets"]
                 DB[(Database Tier)]
             end
