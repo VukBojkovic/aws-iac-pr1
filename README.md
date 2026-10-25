@@ -18,36 +18,27 @@ A modular, enterprise-grade Python application and infrastructure project design
 
 ## Architecture Diagram
 
-```mermaid
 graph TD
-    subgraph AWS Cloud - eu-central-1
-        subgraph Custom VPC 10.0.0.0/16
-            subgraph Public Subnets Multi-AZ
+    subgraph AWS_Cloud ["AWS Cloud (eu-central-1)"]
+        subgraph Custom_VPC ["Custom VPC (10.0.0.0/16)"]
+            subgraph Public_Subnets ["Public Subnets (Multi-AZ)"]
                 IGW[Internet Gateway]
                 NAT[NAT Gateway]
             end
-            
-            subgraph Private App Subnets
+
+            subgraph Private_App_Subnets ["Private App Subnets"]
                 APP[App Workloads / EC2]
             end
-            
-            subgraph Private Data Subnets
+
+            subgraph Private_Data_Subnets ["Private Data Subnets"]
                 DB[(Database Tier)]
             end
-            
-            S3_EP[VPC S3 Gateway Endpoint]
         end
-    end
-
-    subgraph Local Environment / Runner
-        CLI[Python CLI - main.py] -->|boto3 API Calls| VPC
-        CLI -->|Audit Logs & Output| Terminal[Console / File Output]
     end
 
     IGW --> NAT
     NAT --> APP
     APP --> DB
-    APP --> S3_EP
 
 ## Project Roadmap and Infrastructure Overview
 
