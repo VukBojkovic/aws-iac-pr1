@@ -18,9 +18,11 @@ A modular, enterprise-grade Python application and infrastructure project design
 
 ## Architecture Overview
 
+![AWS Network Architecture](architecture-diagram.png)
+
 The infrastructure is deployed in the `eu-central-1` region following a secure, multi-tier, multi-AZ VPC architecture:
 
-- **Public Subnets:** Contain the Internet Gateway (`IGW`) and NAT Gateway for secure outbound internet access.
+- **Public Subnets:** Contain the Internet Gateway (`aws-iac-pr1-igw`) and NAT Gateway for secure outbound internet access.
 - **Private App Subnets:** Host the core application workloads and EC2 instances (`APP`).
 - **Private Data Subnets:** Dedicated to database tiers (`DB`), isolated from direct public exposure.
 
