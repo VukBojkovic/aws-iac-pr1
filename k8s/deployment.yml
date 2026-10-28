@@ -1,18 +1,37 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: aws-audit-app
+  name: aws-iac-app-deployment
+  labels:
+    app: aws-iac-app
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
-      app: aws-audit
+      app: aws-iac-app
   template:
     metadata:
       labels:
-        app: aws-audit
+        app: aws-iac-app
     spec:
       containers:
-      - name: audit
-        image: aws-audit-tool:latest
+      - name: flask-app
+        image: aws-iac-app:latest  
         imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        env:
+        - name: ENVIRONMENT
+          value: "production"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 3
+          periodSeconds: 5

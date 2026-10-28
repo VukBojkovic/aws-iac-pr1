@@ -1,11 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: aws-audit-service
+  name: aws-iac-app-service
 spec:
+  type: ClusterIP  
   selector:
-    app: aws-audit
+    app: aws-iac-app
   ports:
     - protocol: TCP
-      port: 80
-      targetPort: 8080
+      port: 80         
+      targetPort: 8080 

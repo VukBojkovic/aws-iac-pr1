@@ -18,7 +18,7 @@ A modular, enterprise-grade Python application and infrastructure project design
 
 ## Architecture Overview
 
-![AWS Network Architecture](architecture-diagram.png)
+![AWS Network Architecture](architecture-diagram.jpg)
 
 The infrastructure is deployed in the `eu-central-1` region following a secure, multi-tier, multi-AZ VPC architecture:
 

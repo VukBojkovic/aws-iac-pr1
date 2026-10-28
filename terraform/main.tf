@@ -215,10 +215,10 @@ resource "aws_route_table_association" "private_data" {
 
 
 resource "aws_vpc_endpoint" "s3" {
-  vpc_id          = aws_vpc.main.id
-  service_name    = "com.amazonaws.eu-central-1.s3"
+  vpc_id            = aws_vpc.main.id
+  service_name      = "com.amazonaws.eu-central-1.s3"
   vpc_endpoint_type = "Gateway"
-  route_table_ids = [aws_route_table.private.id, aws_route_table.public.id]
+  route_table_ids   = [aws_route_table.private.id, aws_route_table.public.id]
 
   tags = {
     Name = "aws-iac-pr1-s3-endpoint"
