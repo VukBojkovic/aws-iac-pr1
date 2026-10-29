@@ -31,19 +31,30 @@ def db_check():
             connect_timeout=3
         )
         with connection.cursor() as cursor:
-            cursor.execute("SELECT 1")
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS visits (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    visited_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )
+            """)
+            
+            cursor.execute("INSERT INTO visits () VALUES ()")
+            connection.commit()
+            
+            cursor.execute("SELECT COUNT(*) FROM visits")
             result = cursor.fetchone()
+            
         connection.close()
         
         return jsonify(
             status="success",
-            message="Successfully connected to RDS MySQL database!",
-            db_test_query=result[0]
+            message="Successfully connected to RDS MySQL and recorded visit!",
+            total_visits=result[0]
         ), 200
     except Exception as e:
         return jsonify(
             status="error",
-            message="Failed to connect to database",
+            message="Failed to connect to database or execute query",
             error_details=str(e)
         ), 500
 
