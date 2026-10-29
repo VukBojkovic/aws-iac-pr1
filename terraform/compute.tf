@@ -18,13 +18,43 @@ resource "aws_launch_template" "app" {
 
   vpc_security_group_ids = [aws_security_group.app_sg.id]
 
+  # Dodeljujemo IAM profil instanci za pristup ECR-u
+  iam_instance_profile {
+    arn = aws_iam_instance_profile.ec2_profile.arn
+  }
+
   user_data = base64encode(<<-EOF
               #!/bin/bash
+              exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>&1)
+              echo "Starting user_data script execution..."
+
               apt-get update -y
-              apt-get install -y docker.io python3-pip git
+              apt-get install -y docker.io awscli python3-pip git
+
               systemctl start docker
               systemctl enable docker
 
+              echo "Waiting for Docker daemon to start..."
+              until docker info >/dev/null 2>&1; do
+                sleep 2
+              done
+
+              echo "Logging in to Amazon ECR..."
+              aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 804792415610.dkr.ecr.eu-central-1.amazonaws.com
+
+              echo "Pulling Docker image..."
+              docker pull 804792415610.dkr.ecr.eu-central-1.amazonaws.com/aws-iac-pr1-app:latest
+
+              echo "Running Docker container with Database environment variables..."
+              docker run -d --restart always -p 8080:8080 \
+                -e DB_HOST="${aws_db_instance.database.address}" \
+                -e DB_PORT="3306" \
+                -e DB_USER="dbadmin" \
+                -e DB_PASSWORD="LozinkaZaBazu123!" \
+                -e DB_NAME="appdb" \
+                804792415610.dkr.ecr.eu-central-1.amazonaws.com/aws-iac-pr1-app:latest
+                
+              echo "Container started successfully."
               EOF
   )
 
